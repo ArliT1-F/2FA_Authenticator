@@ -113,3 +113,6 @@ docs/_build/
 # Backup files
 *.bak
 *.backup
+
+# Security sensitive files (avoid generic config names in production)
+# config.json - consider using more specific names like config.secret.json

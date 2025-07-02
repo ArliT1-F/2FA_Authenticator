@@ -45,14 +45,12 @@ function TabNavigator() {
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
-          let iconName: keyof typeof Ionicons.glyphMap;
+          let iconName: keyof typeof Ionicons.glyphMap = 'help-outline';
 
           if (route.name === 'Accounts') {
             iconName = focused ? 'shield' : 'shield-outline';
           } else if (route.name === 'Settings') {
             iconName = focused ? 'settings' : 'settings-outline';
-          } else {
-            iconName = 'help-outline';
           }
 
           return <Ionicons name={iconName} size={size} color={color} />;

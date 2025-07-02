@@ -10,14 +10,14 @@ export class StorageService {
   /**
    * Initialize storage with master encryption key
    */
-  static async initializeStorage(masterPassword?: string): Promise<void> {
+  static async initializeStorage(): Promise<void> {
     try {
-      let encryptionKey = await SecureStore.getItemAsync(this.MASTER_KEY);
+      let encryptionKey = await SecureStore.getItemAsync(StorageService.MASTER_KEY);
       
       if (!encryptionKey) {
         // Generate new encryption key
         encryptionKey = CryptoJS.lib.WordArray.random(256/8).toString();
-        await SecureStore.setItemAsync(this.MASTER_KEY, encryptionKey);
+        await SecureStore.setItemAsync(StorageService.MASTER_KEY, encryptionKey);
       }
     } catch (error) {
       console.error('Error initializing storage:', error);
@@ -29,7 +29,7 @@ export class StorageService {
    * Get encryption key
    */
   private static async getEncryptionKey(): Promise<string> {
-    const key = await SecureStore.getItemAsync(this.MASTER_KEY);
+    const key = await SecureStore.getItemAsync(StorageService.MASTER_KEY);
     if (!key) {
       throw new Error('Encryption key not found. Storage not initialized.');
     }
@@ -250,7 +250,15 @@ export class StorageService {
    * Generate unique ID
    */
   private static generateId(): string {
-    return Date.now().toString(36) + Math.random().toString(36).substr(2);
+    // Use crypto.getRandomValues for better randomness
+    const array = new Uint8Array(16);
+    if (typeof crypto !== 'undefined' && crypto.getRandomValues) {
+      crypto.getRandomValues(array);
+      return Array.from(array, byte => byte.toString(16).padStart(2, '0')).join('');
+    } else {
+      // Fallback for environments without crypto.getRandomValues
+      return Date.now().toString(36) + Math.random().toString(36).substr(2);
+    }
   }
 
   /**

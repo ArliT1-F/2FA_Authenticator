@@ -41,6 +41,8 @@ export function AccountItem({
         <TouchableOpacity
           style={styles.deleteButton}
           onPress={onDelete}
+          accessibilityLabel={`Delete account ${account.name}`}
+          accessibilityRole="button"
           hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
         >
           <Ionicons name="trash-outline" size={20} color="#FF3B30" />
@@ -48,7 +50,12 @@ export function AccountItem({
       </View>
 
       <View style={styles.codeSection}>
-        <TouchableOpacity style={styles.codeContainer} onPress={onCopy}>
+        <TouchableOpacity 
+          style={styles.codeContainer} 
+          onPress={onCopy}
+          accessibilityLabel={`Copy code ${code}`}
+          accessibilityRole="button"
+        >
           <Text style={[styles.code, isExpiringSoon && styles.codeExpiring]}>
             {code}
           </Text>

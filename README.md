@@ -185,7 +185,7 @@ We welcome contributions from the community! Please read our [Contributing Guide
 4. **Code style** - Follow established linting rules
 
 ### Reporting Security Issues
-For security vulnerabilities, please email: security@example.com
+For security vulnerabilities, please use [GitHub Security Advisories](https://github.com/ArliT1-F/2FA_Authenticator/security/advisories/new).
 Do not open public issues for security-related bugs.
 
 ## 📋 Roadmap

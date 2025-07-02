@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   View,
   Text,
@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Alert,
   RefreshControl,
+  ActivityIndicator,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import * as Clipboard from 'expo-clipboard';
@@ -23,6 +24,7 @@ interface AccountsScreenProps {
 export default function AccountsScreen({ navigation }: AccountsScreenProps) {
   const [accounts, setAccounts] = useState<Account[]>([]);
   const [refreshing, setRefreshing] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [currentTime, setCurrentTime] = useState(Date.now());
 
   useEffect(() => {
@@ -38,11 +40,16 @@ export default function AccountsScreen({ navigation }: AccountsScreenProps) {
 
   const loadAccounts = async () => {
     try {
+      if (!refreshing) {
+        setLoading(true);
+      }
       const storedAccounts = await StorageService.getAccounts();
       setAccounts(storedAccounts);
     } catch (error) {
       console.error('Error loading accounts:', error);
       Alert.alert('Error', 'Failed to load accounts');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -84,8 +91,8 @@ export default function AccountsScreen({ navigation }: AccountsScreenProps) {
   };
 
   const renderAccount = ({ item }: { item: Account }) => {
-    const code = TOTPService.generateCode(item.secret);
-    const timeLeft = TOTPService.getTimeRemaining();
+    const code = useMemo(() => TOTPService.generateCode(item.secret), [item.secret, currentTime]);
+    const timeLeft = useMemo(() => TOTPService.getTimeRemaining(), [currentTime]);
 
     return (
       <AccountItem
@@ -107,6 +114,15 @@ export default function AccountsScreen({ navigation }: AccountsScreenProps) {
       </Text>
     </View>
   );
+
+  if (loading && !refreshing) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#007AFF" />
+        <Text style={styles.loadingText}>Loading accounts...</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -136,6 +152,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f5f5f5',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#f5f5f5',
+  },
+  loadingText: {
+    marginTop: 16,
+    fontSize: 16,
+    color: '#666',
   },
   emptyContainer: {
     flex: 1,

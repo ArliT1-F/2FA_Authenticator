@@ -27,7 +27,7 @@ By participating in this project, you agree to abide by our Code of Conduct. We 
 
 ### Prerequisites
 
-- Node.js 18+ or Python 3.8+
+- Node.js 18+ and npm
 - Git
 - Mobile development environment (Android Studio/Xcode)
 - Expo CLI (`npm install -g @expo/cli`)
@@ -131,7 +131,7 @@ All security-related changes must be reviewed by at least two maintainers before
 
 ### Vulnerability Reporting
 
-For security vulnerabilities, please email: security@example.com
+For security vulnerabilities, please use [GitHub Security Advisories](https://github.com/ArliT1-F/2FA_Authenticator/security/advisories/new).
 
 **Do not open public issues for security bugs.**
 

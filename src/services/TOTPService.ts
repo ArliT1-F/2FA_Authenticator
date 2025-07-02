@@ -115,8 +115,19 @@ export class TOTPService {
     const codes: string[] = [];
     
     for (let i = 0; i < count; i++) {
-      // Generate 8-character alphanumeric code
-      const code = Math.random().toString(36).substring(2, 10).toUpperCase();
+      // Generate cryptographically secure 8-character alphanumeric code
+      const array = new Uint8Array(6);
+      if (typeof crypto !== 'undefined' && crypto.getRandomValues) {
+        crypto.getRandomValues(array);
+      } else {
+        // Fallback for React Native
+        for (let j = 0; j < array.length; j++) {
+          array[j] = Math.floor(Math.random() * 256);
+        }
+      }
+      const code = Array.from(array, byte =>
+        '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'[byte % 36]
+      ).join('');
       codes.push(code);
     }
     
