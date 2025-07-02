@@ -1,8 +1,8 @@
-import React, { createContext, useContext, ReactNode } from 'react';
+import React, { createContext, useContext, ReactNode, useState } from 'react';
 
 interface AuthContextType {
   isAuthenticated: boolean;
-  login: () => void;
+  login: () => Promise<void>;
   logout: () => void;
 }
 
@@ -13,10 +13,30 @@ interface AuthProviderProps {
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const login = async (): Promise<void> => {
+    try {
+      // TODO: Implement biometric authentication or PIN verification
+      // const success = await BiometricAuth.authenticate();
+      // setIsAuthenticated(success);
+      
+      // Placeholder implementation - replace with actual authentication
+      setIsAuthenticated(true);
+    } catch (error) {
+      console.error('Authentication failed:', error);
+      setIsAuthenticated(false);
+    }
+  };
+
+  const logout = (): void => {
+    setIsAuthenticated(false);
+  };
+
   const value = {
-    isAuthenticated: true,
-    login: () => {},
-    logout: () => {},
+    isAuthenticated,
+    login,
+    logout,
   };
 
   return (

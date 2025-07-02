@@ -1,4 +1,4 @@
-import React, { createContext, useContext, ReactNode } from 'react';
+import React, { createContext, useContext, ReactNode, useState } from 'react';
 
 interface ThemeContextType {
   theme: 'light' | 'dark';
@@ -12,9 +12,15 @@ interface ThemeProviderProps {
 }
 
 export function ThemeProvider({ children }: ThemeProviderProps) {
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  
+  const toggleTheme = (): void => {
+    setTheme(prev => prev === 'light' ? 'dark' : 'light');
+  };
+  
   const value = {
-    theme: 'light' as const,
-    toggleTheme: () => {},
+    theme,
+    toggleTheme,
   };
 
   return (
