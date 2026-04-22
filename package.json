@@ -1,0 +1,46 @@
+{
+  "name": "2fa-authenticator",
+  "version": "1.0.0",
+  "description": "A Vercel-ready 2FA authenticator web service.",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "prisma:generate": "prisma generate",
+    "postinstall": "prisma generate"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArliT1-F/2FA_Authenticator.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "GPL-3.0-only",
+  "bugs": {
+    "url": "https://github.com/ArliT1-F/2FA_Authenticator/issues"
+  },
+  "homepage": "https://github.com/ArliT1-F/2FA_Authenticator#readme",
+  "dependencies": {
+    "@prisma/adapter-pg": "^7.7.0",
+    "@prisma/client": "^7.7.0",
+    "bcryptjs": "^3.0.3",
+    "jose": "^6.2.2",
+    "next": "^16.2.4",
+    "otpauth": "^9.5.0",
+    "pg": "^8.20.0",
+    "prisma": "^7.7.0",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@types/node": "^25.6.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "eslint": "^9.39.4",
+    "eslint-config-next": "^16.2.4",
+    "typescript": "^6.0.3"
+  }
+}
