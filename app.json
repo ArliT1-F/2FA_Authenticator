@@ -1,0 +1,36 @@
+{
+  "expo": {
+    "name": "2FA Authenticator",
+    "slug": "twofa-authenticator",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.twofa.authenticator",
+      "infoPlist": {
+        "NSCameraUsageDescription": "This app uses the camera to scan QR codes for adding new 2FA accounts.",
+        "NSFaceIDUsageDescription": "This app uses Face ID for secure authentication to protect your 2FA codes."
+      }
+    },
+    "android": {
+      "package": "com.twofa.authenticator",
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.USE_FINGERPRINT",
+        "android.permission.USE_BIOMETRIC"
+      ]
+    },
+    "plugins": [
+      [
+        "expo-local-authentication",
+        {
+          "faceIDPermission": "Allow 2FA Authenticator to use Face ID for secure access to your authentication codes."
+        }
+      ]
+    ]
+  }
+}
